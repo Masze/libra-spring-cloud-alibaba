@@ -42,28 +42,6 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!--引入注册中心阿里巴巴-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.alibaba.nacos</groupId>
-					<artifactId>nacos-client</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba.nacos</groupId>
-			<artifactId>nacos-client</artifactId>
-		</dependency>
-
-		<!--引入配置中心阿里巴巴-->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-		</dependency>
-
 	</dependencies>
 
 	<build>
