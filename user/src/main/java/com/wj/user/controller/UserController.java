@@ -6,7 +6,6 @@ import com.wj.api.service.RoleServiceFeignClient;
 import com.wj.user.Global;
 import com.wj.user.service.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
