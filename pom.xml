@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.1.RELEASE</version>
+		<version>2.1.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -20,25 +20,34 @@
 		<module>api</module>
 		<module>role</module>
 		<module>user</module>
+		<module>gateway</module>
 	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Greenwich.SR4</spring-cloud.version>
+		<spring-cloud-alibaba.version>0.9.0.RELEASE</spring-cloud-alibaba.version>
+	</properties>
 
 	<dependencyManagement>
 		<dependencies>
 
-
 			<!--spring cloud-->
-			<!--			<dependency>-->
-			<!--				<groupId>org.springframework.cloud</groupId>-->
-			<!--				<artifactId>spring-cloud-dependencies</artifactId>-->
-			<!--				<version>Finchley.SR1</version>-->
-			<!--				<type>pom</type>-->
-			<!--				<scope>import</scope>-->
-			<!--			</dependency>-->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 
+			<!--spring cloud alibaba-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
-				<version>0.9.0.RELEASE</version>
+				<version>${spring-cloud-alibaba.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -48,12 +57,14 @@
 	</dependencyManagement>
 
 	<dependencies>
+
 		<!--fast json-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.58</version>
 		</dependency>
+
 		<!--lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -86,11 +97,26 @@
 
 
 		<!--sentinel-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+		</dependency>-->
+
+		<!--test-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
-
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

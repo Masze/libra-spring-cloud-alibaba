@@ -1,0 +1,47 @@
+#服务启动端口的配置
+server:
+  port: 9000
+spring:
+  cloud:
+    #nacos 服务发现相关配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    #gateway相关配置
+    gateway:
+      discovery:      #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
+        locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
+          lower-case-service-id: true
+          enabled: true
+      #路由定义
+      routes:
+
+        - id: baidu
+          uri: https://www.baidu.com
+          predicates:
+            - Path=/baidu/**
+          filters:
+            - StripPrefix=1
+
+        - id: sina
+          uri: https://www.sina.com.cn/
+          predicates:
+            - Path=/sina/**
+          filters:
+            - StripPrefix=1
+
+        - id: gitbook
+          uri: https://gitbook.cn/gitchat/ #gitbook/columns
+          predicates:
+            - Path=/gitbook/**
+          filters:
+            - StripPrefix=1
+
+        - id: httpbin
+          uri: http://httpbin.org:80/
+          filters:
+            - AddRequestHeader=X-Request-Foo, Bar
+            - StripPrefix=1
+          predicates:
+            - Path=/get/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
