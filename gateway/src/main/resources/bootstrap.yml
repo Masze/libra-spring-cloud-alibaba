@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: service-gateway
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension:  yml # \u6307\u5B9A\u914D\u7F6E\u7684\u540E\u7F00\uFF0C\u652F\u6301 properties\u3001yaml\u3001yml\uFF0C\u9ED8\u8BA4\u4E3A properties
+
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        # Add your routes here.
+        - id: aliyun_route
+          uri: https://www.aliyun.com/
+          predicates:
+            - Path=/product/**
+
+        - id: httpbin_route
+          uri: https://httpbin.org
+          predicates:
+            - Path=/httpbin/**
+          filters:
+            - RewritePath=/httpbin/(?<segment>.*), /$\{segment}
+
+        - id: user_route
+          uri: lb://service-user/
+          predicates:
+            - Path=/service-user/**
+          filters:
+            - StripPrefix=1
+
+    sentinel:
+      datasource.ds1.nacos:
+        server-addr: 127.0.0.1:8848
+        data-id: gateway.json
+        data-type: json
+        group-id: DEFAULT_GROUP
+        ruleType: gw-flow
+
+#      datasource.ds2.nacos:
+#        server-addr: 127.0.0.1:8848
+#        data-id: api.json
+#        data-type: json
+#        group-id: DEFAULT_GROUP
+#        ruleType: gw-api-group
+
+      ## 应用与Sentinel控制台交互的端口，应用本地会起一个该端口占用的HttpServer
+      transport:
+        ## Sentinel 控制台地址
+        dashboard: localhost:8080
+        ## 应用与Sentinel控制台的心跳间隔时间
+        heartbeat-interval-ms: 60000
+      filter:
+        enabled: true
+      scg:
+        fallback:
+          ##  Spring Cloud Gateway 熔断后的响应模式(选择 redirect or response)
+          mode: response
+          ## Spring Cloud Gateway 响应模式为 'response' 模式对应的响应码
+          response-status: 429
+          ## Spring Cloud Gateway 响应模式为 'response' 模式对应的响应内容
+          response-body: "{code:429,msg:'限流',data:''}"
+        order: -100
