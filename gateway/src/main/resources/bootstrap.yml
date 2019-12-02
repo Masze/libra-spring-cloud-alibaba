@@ -17,26 +17,26 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
-      routes:
-        # Add your routes here.
-        - id: aliyun_route
-          uri: https://www.aliyun.com/
-          predicates:
-            - Path=/product/**
-
-        - id: httpbin_route
-          uri: https://httpbin.org
-          predicates:
-            - Path=/httpbin/**
-          filters:
-            - RewritePath=/httpbin/(?<segment>.*), /$\{segment}
-
-        - id: user_route
-          uri: lb://service-user/
-          predicates:
-            - Path=/service-user/**
-          filters:
-            - StripPrefix=1
+#      routes:
+#        # Add your routes here.
+#        - id: aliyun_route
+#          uri: https://www.aliyun.com/
+#          predicates:
+#            - Path=/product/**
+#
+#        - id: httpbin_route
+#          uri: https://httpbin.org
+#          predicates:
+#            - Path=/httpbin/**
+#          filters:
+#            - RewritePath=/httpbin/(?<segment>.*), /$\{segment}
+#
+#        - id: user_route
+#          uri: lb://service-user/
+#          predicates:
+#            - Path=/service-user/**
+#          filters:
+#            - StripPrefix=1
 
     sentinel:
       datasource.ds1.nacos:
@@ -68,5 +68,5 @@ spring:
           ## Spring Cloud Gateway 响应模式为 'response' 模式对应的响应码
           response-status: 429
           ## Spring Cloud Gateway 响应模式为 'response' 模式对应的响应内容
-          response-body: "{code:429,msg:'限流',data:''}"
+          response-body: "{code: 429, msg: '限流', data: '' } "
         order: -100

@@ -1,0 +1,27 @@
+spring:
+  cloud:
+   gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        # Add your routes here.
+        - id: aliyun_route
+          uri: https://www.aliyun.com/
+          predicates:
+            - Path=/product/**
+
+        - id: httpbin_route
+          uri: https://httpbin.org
+          predicates:
+            - Path=/httpbin/**
+          filters:
+            - RewritePath=/httpbin/(?<segment>.*), /$\{segment}
+
+        - id: user_route
+          uri: lb://service-user/
+          predicates:
+            - Path=/service-user/**
+          filters:
+            - StripPrefix=1
